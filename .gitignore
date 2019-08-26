@@ -1,0 +1,22 @@
+# ignore files
+*csv
+*gz
+*pyc
+*sh
+*pkl
+*pickle
+*npy
+*npz
+*ftr
+*out
+*org
+*pt
+*log
+*zip
+*wav
+
+# python
+__pychace__/
+
+# jupyter
+.ipynb_checkpoints
