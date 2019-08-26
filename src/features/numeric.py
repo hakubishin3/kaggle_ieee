@@ -39,12 +39,11 @@ def get_id_numeric_cols():
 
 
 def get_numeric_cols():
+    main_numeric_cols = ["TransactionAmt", "dist1", "dist2"]
     id_numeric_cols = get_id_numeric_cols()
 
     """
     numeric_cols = [
-        # dist series
-        'dist1', 'dist2',
         # important
         'V143', 'V165', 'V189', 'V243', 'V257', 'V258',
         # V126 - V137
@@ -55,7 +54,7 @@ def get_numeric_cols():
     ]
     """
 
-    numeric_cols = id_numeric_cols
+    numeric_cols = main_numeric_cols + id_numeric_cols
     remove_cols = ['id_02']
     numeric_cols = [col for col in numeric_cols if col not in remove_cols]
 

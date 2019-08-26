@@ -1,0 +1,263 @@
+{
+    "features": [
+        "Label_Encoding",
+        "Count_Encoding",
+        "Numeric"
+    ],
+    "cv": {
+        "method": "GroupKFold",
+        "n_splits": 5
+    },
+    "adversarial_validation": {
+        "lgb_model_params": {
+            "objective": "binary",
+            "metric": "auc",
+            "boosting": "gbdt",
+            "max_depth": 5,
+            "num_leaves": 50,
+            "learning_rate": 0.1,
+            "colsample_bytree": 0.7,
+            "subsample": 0.1,
+            "subsample_freq": 1,
+            "seed": 71,
+            "bagging_seed": 71,
+            "feature_fraction_seed": 71,
+            "drop_seed": 71,
+            "verbose": -1
+        },
+        "lgb_train_params": {
+            "num_boost_round": 1000,
+            "early_stopping_rounds": 100,
+            "verbose_eval": 100
+        }
+    },
+    "model": {
+        "name": "lightgbm",
+        "model_params": {
+            "boosting_type": "gbdt",
+            "objective": "binary",
+            "metric": "AUC",
+            "learning_rate": 0.1,
+            "num_leaves": 192,
+            "subsample": 0.7,
+            "subsample_freq": 1,
+            "colsample_bytree": 0.7,
+            "min_data_in_leaf": 30,
+            "seed": 71,
+            "bagging_seed": 71,
+            "feature_fraction_seed": 71,
+            "drop_seed": 71,
+            "verbose": -1
+        },
+        "train_params": {
+            "num_boost_round": 5000,
+            "early_stopping_rounds": 200,
+            "verbose_eval": 500
+        }
+    },
+    "dataset": {
+        "input_directory": "data/input/",
+        "intermediate_directory": "data/interim/",
+        "feature_directory": "data/features/",
+        "output_directory": "data/output/"
+    },
+    "args": {
+        "config": "configs/model_3.json"
+    },
+    "model_output_dir": "data/output/model_3",
+    "adversarial_validation_result": {
+        "score": {
+            "train": {
+                "auc": 0.7425502109307851
+            },
+            "valid": {
+                "auc": 0.7262841100635946
+            }
+        },
+        "feature_importances": {
+            "Numeric_TransactionAmt": 9995.719969365833,
+            "Label_Encoding_card1": 9546.13424881491,
+            "Count_Encoding_card1": 9246.82308024113,
+            "Count_Encoding_card2": 9090.824879095191,
+            "Numeric_dist1": 8579.375575988415,
+            "Count_Encoding_card5": 7321.988013625145,
+            "Count_Encoding_addr1": 6968.594284725361,
+            "Label_Encoding_card2": 6633.964202555479,
+            "Count_Encoding_id_20": 6349.922603159238,
+            "Label_Encoding_DeviceInfo": 5362.1681326940015,
+            "Count_Encoding_id_33": 5355.718934307632,
+            "Count_Encoding_DeviceInfo": 5099.023376420788,
+            "Numeric_dist2": 4918.219805738598,
+            "Label_Encoding_id_38": 4869.116554492561,
+            "Label_Encoding_addr1": 4477.949831724167,
+            "Numeric_id_01": 4342.445696589188,
+            "Count_Encoding_P_emaildomain": 4022.8776096432207,
+            "Label_Encoding_card5": 3841.6114378012717,
+            "Numeric_id_06": 3695.843373840089,
+            "Count_Encoding_ProductCD": 3670.436191706671
+        }
+    },
+    "evals_result": {
+        "oof_score": 0.850510809888882,
+        "cv_score": {
+            "cv1": {
+                "train": {
+                    "auc": 0.9997819340147533
+                },
+                "valid": {
+                    "auc": 0.8535269890254796
+                }
+            },
+            "cv2": {
+                "train": {
+                    "auc": 0.981336032680283
+                },
+                "valid": {
+                    "auc": 0.8642207352802207
+                }
+            },
+            "cv3": {
+                "train": {
+                    "auc": 0.9785529673028716
+                },
+                "valid": {
+                    "auc": 0.8493193463034772
+                }
+            },
+            "cv4": {
+                "train": {
+                    "auc": 0.9875457020269841
+                },
+                "valid": {
+                    "auc": 0.8612244218773771
+                }
+            },
+            "cv5": {
+                "train": {
+                    "auc": 0.9797529503566553
+                },
+                "valid": {
+                    "auc": 0.8579416376411233
+                }
+            }
+        },
+        "n_data": 590540,
+        "best_iteration": 171.99999999999997,
+        "n_features": 113,
+        "feature_importance": {
+            "Numeric_TransactionAmt": 27717.707848989965,
+            "Count_Encoding_card1": 27652.41889810562,
+            "Label_Encoding_card1": 27169.743892365696,
+            "Count_Encoding_addr1": 19768.66219599247,
+            "Label_Encoding_addr1": 17959.97470090389,
+            "Count_Encoding_card2": 17843.18971312046,
+            "Label_Encoding_card2": 17534.770955967902,
+            "Numeric_dist1": 16029.438149523736,
+            "Count_Encoding_R_emaildomain_v2": 15817.094103562831,
+            "Count_Encoding_P_emaildomain": 11938.901434385776,
+            "Count_Encoding_DeviceInfo": 11697.182473647594,
+            "Count_Encoding_id_17": 11404.806816112996,
+            "Count_Encoding_id_20": 8594.554416763782,
+            "Numeric_dist2": 8459.365813457965,
+            "Numeric_id_01": 8080.104778325558,
+            "Label_Encoding_id_20": 8062.363189637661,
+            "Label_Encoding_M4": 7304.663942015171,
+            "Label_Encoding_DeviceInfo": 7082.8045418560505,
+            "Count_Encoding_card5": 6573.975223207473,
+            "Count_Encoding_R_emaildomain_bin": 6405.799303126335,
+            "Count_Encoding_P_emaildomain_v2": 6115.663454318046,
+            "Label_Encoding_card6": 5989.8264941513535,
+            "Count_Encoding_card3": 5878.693842220307,
+            "Count_Encoding_R_emaildomain": 5832.652458357811,
+            "Numeric_id_06": 5791.918918013573,
+            "Label_Encoding_card5": 5581.617556595802,
+            "Label_Encoding_P_emaildomain": 5443.024359977246,
+            "Count_Encoding_M4": 4686.938768947124,
+            "Numeric_id_09": 4480.1440873205665,
+            "Numeric_id_05": 4284.186842310429,
+            "Numeric_id_10": 4134.290699541569,
+            "Count_Encoding_P_emaildomain_bin": 3988.768358230591,
+            "Count_Encoding_id_33": 3785.414587420225,
+            "Label_Encoding_M5": 3773.1944925785065,
+            "Label_Encoding_id_33": 3468.1137456834317,
+            "Count_Encoding_M6": 3050.0739450097085,
+            "Label_Encoding_P_emaildomain_v2": 2888.925809895992,
+            "Count_Encoding_M5": 2729.041121685505,
+            "Label_Encoding_card3": 2634.864745283127,
+            "Label_Encoding_M6": 2474.1884926438333,
+            "Label_Encoding_R_emaildomain_bin": 2447.3039445757868,
+            "Label_Encoding_P_emaildomain_bin": 2366.7145252466203,
+            "Count_Encoding_M3": 2179.880967271328,
+            "Count_Encoding_card6": 2136.477346932888,
+            "Count_Encoding_id_14": 2126.138148009777,
+            "Label_Encoding_card4": 1994.129136055708,
+            "Label_Encoding_ProductCD": 1823.7108398675919,
+            "Count_Encoding_id_18": 1795.5667887926102,
+            "Count_Encoding_ProductCD": 1759.4294327735902,
+            "Label_Encoding_R_emaildomain": 1482.3220283389091,
+            "Count_Encoding_M7": 1402.1928496479989,
+            "Count_Encoding_M8": 1183.7748010635376,
+            "Count_Encoding_card4": 1182.1964968442917,
+            "Label_Encoding_id_18": 1160.1487237691879,
+            "Label_Encoding_id_14": 1062.4342487096787,
+            "Numeric_id_04": 973.9722611427308,
+            "Label_Encoding_id_32": 963.723036634922,
+            "Label_Encoding_R_emaildomain_suffix": 943.1297053694725,
+            "Count_Encoding_DeviceType": 940.1012893795967,
+            "Label_Encoding_R_emaildomain_v2": 932.4450295686722,
+            "Label_Encoding_M8": 894.6192272305489,
+            "Label_Encoding_DeviceType": 866.1149637341499,
+            "Count_Encoding_M2": 851.3357093930244,
+            "Label_Encoding_id_38": 850.8292741894722,
+            "Count_Encoding_M9": 839.1511202335357,
+            "Label_Encoding_id_37": 835.3339176893235,
+            "Numeric_id_03": 816.9345951199532,
+            "Label_Encoding_id_17": 801.0932629227639,
+            "Count_Encoding_id_32": 759.7229109048843,
+            "Count_Encoding_P_emaildomain_suffix": 753.0866163015365,
+            "Label_Encoding_M3": 733.6435390233994,
+            "Label_Encoding_M7": 712.8684255480766,
+            "Label_Encoding_M2": 709.7745740890502,
+            "Label_Encoding_P_emaildomain_suffix": 690.3110678076744,
+            "Count_Encoding_id_38": 655.2796615481377,
+            "Label_Encoding_id_12": 641.6755856394768,
+            "Numeric_id_11": 596.1817091107368,
+            "Label_Encoding_M9": 587.3398550629615,
+            "Count_Encoding_id_15": 507.2107498407364,
+            "Count_Encoding_id_21": 471.87853825092316,
+            "Count_Encoding_id_12": 452.7516674280167,
+            "Count_Encoding_addr2": 423.4463235378265,
+            "Label_Encoding_id_16": 399.27794609069826,
+            "Label_Encoding_id_15": 389.7452108919621,
+            "Numeric_id_07": 327.9199168920517,
+            "Count_Encoding_id_37": 308.54073855876925,
+            "Label_Encoding_id_21": 297.99459249973296,
+            "Numeric_id_08": 285.53888741731646,
+            "Count_Encoding_id_25": 284.9875340104103,
+            "Label_Encoding_id_36": 258.6611229538918,
+            "Count_Encoding_id_16": 254.96479321718215,
+            "Label_Encoding_M1": 234.85493842363357,
+            "Count_Encoding_M1": 228.58781930208207,
+            "Count_Encoding_id_36": 218.906431555748,
+            "Count_Encoding_R_emaildomain_suffix": 198.90095003843308,
+            "Count_Encoding_id_26": 169.26793290376662,
+            "Label_Encoding_addr2": 154.2524034500122,
+            "Label_Encoding_id_29": 122.77090765237809,
+            "Count_Encoding_id_29": 113.95924758911133,
+            "Count_Encoding_id_28": 103.17060794830323,
+            "Label_Encoding_id_24": 93.42437562942504,
+            "Label_Encoding_id_26": 78.11349678039551,
+            "Label_Encoding_id_28": 76.96300872564316,
+            "Label_Encoding_id_23": 74.15529611110688,
+            "Label_Encoding_id_25": 67.80610573291779,
+            "Count_Encoding_id_22": 58.60203289985657,
+            "Label_Encoding_id_35": 45.6737596988678,
+            "Count_Encoding_id_24": 32.1350558757782,
+            "Count_Encoding_id_23": 30.129465866088868,
+            "Count_Encoding_id_35": 19.35959142446518,
+            "Label_Encoding_id_22": 4.5870319366455075,
+            "Count_Encoding_id_27": 0.0,
+            "Label_Encoding_id_27": 0.0
+        }
+    }
+}
