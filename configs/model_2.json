@@ -1,7 +1,8 @@
 {
     "features": [
         "Label_Encoding",
-        "Count_Encoding"
+        "Count_Encoding",
+        "Numeric"
     ],
     "cv": {
         "method": "GroupKFold",
