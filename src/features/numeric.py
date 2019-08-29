@@ -47,25 +47,30 @@ def get_D_cols():
         'D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7', 'D8', 'D9', 'D10', 'D11', 'D12', 'D13', 'D14', 'D15'
     ]
 
+def get_V_cols_related_to_Amt():
+    return [
+        # V126 - V137
+        'V126', 'V127', 'V128', 'V129', 'V130', 'V131', 'V132', 'V133', 'V134', 'V135', 'V136', 'V137',
+        # V306 - V321
+        'V306', 'V307', 'V308', 'V309', 'V310', 'V311', 'V312', 'V313', 'V314', 'V315', 'V316', 'V317', 'V318', 'V319', 'V320', 'V321'
+    ]
+
 def get_numeric_cols():
     main_numeric_cols = ["TransactionAmt", "dist1", "dist2"]
     id_numeric_cols = get_id_numeric_cols()
     c_cols = get_C_cols()
     d_cols = get_D_cols()
+    v_cols_related_to_amt = get_V_cols_related_to_Amt()
 
     """
     numeric_cols = [
         # important
         'V143', 'V165', 'V189', 'V243', 'V257', 'V258',
-        # V126 - V137
-        'V126', 'V127', 'V128', 'V129', 'V130', 'V131', 'V132', 'V133', 'V134', 'V135', 'V136', 'V137',
-        # V306 - V321
-        'V306', 'V307', 'V308', 'V309', 'V310', 'V311', 'V312', 'V313', 'V314', 'V315', 'V316', 'V317',
-        'V318', 'V319', 'V320', 'V321',  
+ 
     ]
     """
 
-    numeric_cols = main_numeric_cols + id_numeric_cols + c_cols + d_cols
+    numeric_cols = main_numeric_cols + id_numeric_cols + c_cols + d_cols + v_cols_related_to_amt
     remove_cols = ['id_02', 'C9', 'C11', 'C12', 'C13']
     numeric_cols = [col for col in numeric_cols if col not in remove_cols]
 
