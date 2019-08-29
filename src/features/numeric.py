@@ -93,6 +93,13 @@ class Numeric(Feature):
             self.train_feature[numeric_cols] = train[numeric_cols]
             self.test_feature[numeric_cols] = test[numeric_cols]
 
+        with timer("make features: V features related to TransactionAmt + TransactionAmt"):
+            v_cols_related_to_amt = get_V_cols_related_to_Amt()
+            for col in v_cols_related_to_amt:
+                new_fe_col_name = col + "_add_Amt"
+                self.train_feature[new_fe_col_name] = train[col] + train["TransactionAmt"]
+                self.test_feature[new_fe_col_name] = test[col] + test["TransactionAmt"]
+
         with timer("end"):
             self.train_feature.reset_index(drop=True, inplace=True)
             self.test_feature.reset_index(drop=True, inplace=True)
