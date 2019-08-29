@@ -65,7 +65,7 @@ class Label_Encoding(Feature):
         categorical_cols = categorical_cols_identity + categorical_cols_transaction
 
         # remove columns
-        remove_cols = ["id_13", "id_19", "id_30", "id_31", "id_34"]
+        remove_cols = []
         categorical_cols = [col for col in categorical_cols if col not in remove_cols]
 
         # add columns

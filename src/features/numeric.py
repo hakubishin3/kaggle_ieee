@@ -42,6 +42,11 @@ def get_C_cols():
         'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'C10', 'C11', 'C12', 'C13', 'C14',
     ]
 
+def get_D_cols():
+    return [
+        'D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7', 'D8', 'D9', 'D10', 'D11', 'D12', 'D13', 'D14', 'D15'
+    ]
+
 def get_numeric_cols():
     main_numeric_cols = ["TransactionAmt", "dist1", "dist2"]
     id_numeric_cols = get_id_numeric_cols()
@@ -60,7 +65,7 @@ def get_numeric_cols():
     """
 
     numeric_cols = main_numeric_cols + id_numeric_cols + c_cols
-    remove_cols = ['id_02', 'C9', 'C11', 'C12', 'C13']
+    remove_cols = []
     numeric_cols = [col for col in numeric_cols if col not in remove_cols]
 
     return numeric_cols
