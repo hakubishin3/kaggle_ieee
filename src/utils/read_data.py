@@ -30,7 +30,7 @@ def read_data(data_dir, data_type="train"):
 
 
 def change_TransactionDT(df):
-    start_date = "2017-12-01"
+    start_date = "2017-11-30"
     df["TransactionDT"] = df["TransactionDT"].apply(
         lambda x: datetime.datetime.strptime(start_date, "%Y-%m-%d") +\
         datetime.timedelta(seconds=int(x))

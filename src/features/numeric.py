@@ -1,5 +1,7 @@
 import sys
 import time
+import datetime
+import itertools
 import pandas as pd
 from contextlib import contextmanager
 from base import Feature
@@ -104,6 +106,12 @@ class Numeric(Feature):
                 new_fe_col_name = col + "_add_Amt"
                 self.train_feature[new_fe_col_name] = train[col] + train["TransactionAmt"]
                 self.test_feature[new_fe_col_name] = test[col] + test["TransactionAmt"]
+
+        with timer("numeric feature processings"):
+            self.train_feature["day_of_week"] = train["TransactionDT"].apply(lambda x: datetime.datetime.strptime(x, "%Y-%m-%d %H:%M:%S").weekday())
+            self.test_feature["day_of_week"] = test["TransactionDT"].apply(lambda x: datetime.datetime.strptime(x, "%Y-%m-%d %H:%M:%S").weekday())
+            self.train_feature['TransactionAmt_decimal'] = ((train['TransactionAmt'] - train['TransactionAmt'].astype(int)) * 1000).astype(int)
+            self.test_feature['TransactionAmt_decimal'] = ((test['TransactionAmt'] - test['TransactionAmt'].astype(int)) * 1000).astype(int)
 
         with timer("end"):
             self.train_feature.reset_index(drop=True, inplace=True)
