@@ -59,9 +59,21 @@ def get_V_cols_related_to_Amt():
 
 def get_V_cols_others():
     """
+    v_cols = [f'V{i+1}' for i in range(339)]
+
+    # remove cols related to Amt
     v_cols_related_to_amt = get_V_cols_related_to_Amt()
-    v_cols = [f"V{i+1}" for i in range(339)]
     v_cols_others = [col for col in v_cols if col not in v_cols_related_to_amt]
+
+    # remove cols
+    # https://www.kaggle.com/duykhanh99/update-lgb-starter-with-r-0-9480-lb
+    remove_cols = [
+        'V300','V309','V111','V124','V106','V125','V315','V134','V102','V123','V316','V113',
+        'V136','V305','V110','V299','V289','V286','V318','V103','V304','V116','V29','V284','V293',
+        'V137','V295','V301','V104','V311','V115','V109','V119','V321','V114','V133','V122','V319',
+        'V105','V112','V118','V117','V121','V108','V135','V320','V303','V297','V120',
+        'V1','V14','V41','V65','V88','V107']
+    v_cols_others = [col for col in v_cols_others if col not in v_cols_related_to_amt]
     """
     v_cols_others = [
         # important features
