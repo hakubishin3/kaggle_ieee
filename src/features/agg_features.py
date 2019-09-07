@@ -23,7 +23,7 @@ FE_DIR = "../../data/features/"
 # Settings
 # ===============
 logger = get_logger()
-var_list = ["TransactionAmt"]
+var_list = ["TransactionAmt", "V258", "V257", "V201"]
 stats_list = ['mean', 'std', 'min', 'max']
 stats_diff_list = ['mean', 'min', 'max']
 groupby_dict = [
@@ -31,11 +31,61 @@ groupby_dict = [
         'key': ['predicted_user_id'],
         'var': var_list,
         'agg': stats_list
+    },
+    {
+        'key': ['card1'],
+        'var': var_list,
+        'agg': stats_list
+    },
+    {
+        'key': ['card2'],
+        'var': var_list,
+        'agg': stats_list
+    },
+    {
+        'key': ['card4'],
+        'var': var_list,
+        'agg': stats_list
+    },
+    {
+        'key': ['addr1', 'addr2'],
+        'var': var_list,
+        'agg': stats_list
+    },
+    {
+        'key': ['card1', 'card2', 'card3', 'card4', 'card5', 'card6', 'addr1', 'addr2', 'ProductCD'],
+        'var': var_list,
+        'agg': stats_list
     }
 ]
 diff_dict = [
     {
         'key': ['predicted_user_id'],
+        'var': var_list,
+        'agg': stats_diff_list
+    },
+    {
+        'key': ['card1'],
+        'var': var_list,
+        'agg': stats_diff_list
+    },
+    {
+        'key': ['card2'],
+        'var': var_list,
+        'agg': stats_diff_list
+    },
+    {
+        'key': ['card4'],
+        'var': var_list,
+        'agg': stats_diff_list
+    },
+    {
+        'key': ['addr1', 'addr2'],
+        'var': var_list,
+        'agg': stats_diff_list
+    },
+    {
+        'key': ['card1', 'card2', 'card3', 'card4', 'card5', 'card6', 'addr1', 'addr2', 'ProductCD'],
         'var': var_list,
         'agg': stats_diff_list
     }

@@ -74,6 +74,7 @@ def main():
     feature_name = x_test.columns
     logger.debug(f'number of features: {len(feature_name)}')
 
+    """
     # =========================================
     # === Adversarial Validation
     # =========================================
@@ -120,6 +121,7 @@ def main():
             'feature_importances': feature_imp.set_index("feature").sort_values(by="value", ascending=False).head(20).to_dict()["value"]
         }
     })
+    """
 
     # =========================================
     # === train model

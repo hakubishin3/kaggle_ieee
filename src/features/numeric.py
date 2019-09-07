@@ -119,6 +119,13 @@ class Numeric(Feature):
                 self.train_feature[new_fe_col_name] = train[col] + train["TransactionAmt"]
                 self.test_feature[new_fe_col_name] = test[col] + test["TransactionAmt"]
 
+        with timer("make features: TransactionAmt * CXX"):
+            c_cols = ['C1', 'C13', 'C14']
+            for col in c_cols:
+                new_fe_col_name = col + "_mul_Amt"
+                self.train_feature[new_fe_col_name] = train[col] * train['TransactionAmt']
+                self.test_feature[new_fe_col_name] = test[col] * test['TransactionAmt']
+
         with timer("numeric feature processings"):
             self.train_feature["day_of_week"] = train["TransactionDT"].apply(lambda x: datetime.datetime.strptime(x, "%Y-%m-%d %H:%M:%S").weekday())
             self.test_feature["day_of_week"] = test["TransactionDT"].apply(lambda x: datetime.datetime.strptime(x, "%Y-%m-%d %H:%M:%S").weekday())
