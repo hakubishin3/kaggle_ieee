@@ -13,7 +13,7 @@ import seaborn as sns
 
 from src.features.base import load_features
 from src.models.lightgbm import LightGBM
-from src.folds.get_folds import get_folds_per_user
+from src.folds.get_folds import get_folds_per_user, get_folds_per_DTM
 from src.utils.logger import get_logger
 from src.utils.json_func import save_json
 
@@ -129,7 +129,7 @@ def main():
     logger.info("train model")
 
     # get folds
-    folds_ids = get_folds_per_user(train)
+    folds_ids = get_folds_per_DTM(train)
 
     x_train, x_test = load_features(config, args.debug)
     feature_name = x_test.columns
