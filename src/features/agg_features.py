@@ -23,7 +23,7 @@ FE_DIR = "../../data/features/"
 # Settings
 # ===============
 logger = get_logger()
-var_list = ["TransactionAmt", "V258", "V257", "V201"]
+var_list = ["TransactionAmt", "V258", "V257", "V201", "TransactionAmt_decimal"]
 stats_list = ['mean', 'std', 'min', 'max']
 stats_diff_list = ['mean', 'min', 'max']
 groupby_dict = [
@@ -118,6 +118,8 @@ class Agg(Feature):
             train = pd.merge(train, predicted_user[['TransactionID', 'predicted_user_id']], how='left', on='TransactionID')
             test = pd.merge(test, predicted_user[['TransactionID', 'predicted_user_id']], how='left', on='TransactionID')
             total = train.append(test).reset_index(drop=True)
+
+            total['TransactionAmt_decimal'] = ((total['TransactionAmt'] - total['TransactionAmt'].astype(int)) * 1000).astype(int)
             org_cols = total.columns
 
         with timer("group by features"):

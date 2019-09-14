@@ -61,11 +61,11 @@ class Count_Encoding(Feature):
         categorical_cols = categorical_cols_identity + categorical_cols_transaction
 
         # remove columns
-        remove_cols = ["id_13", "id_19", "id_30", "id_31", "id_34"]
+        remove_cols = []
         categorical_cols = [col for col in categorical_cols if col not in remove_cols]
 
         # add columns
-        add_cols = ["P_emaildomain_v2", "R_emaildomain_v2", "P_emaildomain_bin", "R_emaildomain_bin", "P_emaildomain_suffix", "R_emaildomain_suffix"]
+        add_cols = ["P_emaildomain_v2", "R_emaildomain_v2", "P_emaildomain_bin", "R_emaildomain_bin", "P_emaildomain_suffix", "R_emaildomain_suffix", "predicted_user_id"]
         categorical_cols = categorical_cols + add_cols
 
         return categorical_cols
@@ -74,6 +74,11 @@ class Count_Encoding(Feature):
         with timer("load data"):
             train = read_preprocessing_data(DATA_DIR, "train", write_mode=False)
             test = read_preprocessing_data(DATA_DIR, "test", write_mode=False)
+
+        with timer("get predicted user id"):
+            predicted_user = pd.read_csv('../../data/interim/20190901_user_ids_share.csv')
+            train = pd.merge(train, predicted_user[['TransactionID', 'predicted_user_id']], how='left', on='TransactionID')
+            test = pd.merge(test, predicted_user[['TransactionID', 'predicted_user_id']], how='left', on='TransactionID')
 
         with timer("count encoding"):
             categorical_cols = self.categorical_features()

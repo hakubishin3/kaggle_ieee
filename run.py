@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import lightgbm as lgb 
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import roc_auc_score
 
 import matplotlib
 matplotlib.use('Agg')
@@ -132,6 +133,8 @@ def main():
     folds_ids = get_folds_per_DTM(train)
 
     x_train, x_test = load_features(config, args.debug)
+    # good_features = list(json.load(open("./data/output/model_17/output.json", "r"))["evals_result"]["feature_importance"].keys())[:500]
+    # x_train, x_test = x_train[good_features], x_test[good_features]
     feature_name = x_test.columns
     model_name = config['model']['name']
     model = model_map[model_name]()
@@ -153,6 +156,31 @@ def main():
     test["isFraud"] = test_preds
     sub = test[["TransactionID", "isFraud"]]
     sub.to_csv(model_output_dir/ "submission.csv", index=False, header=True)
+
+    # ============================================
+    # === Check test score
+    # ============================================
+    df_probing = pd.read_csv('data/interim/probing_toolbox/probing.csv').loc[:, ['TransactionID', 'data_type', 'Probing_isFraud']]
+    df = pd.merge(df_probing, sub, on='TransactionID', how='left')
+
+    # test public score
+    public_score = roc_auc_score(
+        df[df.data_type=="test_public"]['Probing_isFraud'],
+        df[df.data_type=="test_public"]['isFraud']
+    )
+
+    # test private score
+    private_score = roc_auc_score(
+        df[df.data_type=="test_private"]['Probing_isFraud'],
+        df[df.data_type=="test_private"]['isFraud']
+    )
+
+    config.update({
+        'proving_result': {
+            'public_score': public_score,
+            'private_score': private_score,
+        }
+    })
 
     # ============================================
     # === Save
