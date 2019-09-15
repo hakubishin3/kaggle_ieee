@@ -132,6 +132,74 @@ class Numeric(Feature):
             self.train_feature['TransactionAmt_decimal'] = ((train['TransactionAmt'] - train['TransactionAmt'].astype(int)) * 1000).astype(int)
             self.test_feature['TransactionAmt_decimal'] = ((test['TransactionAmt'] - test['TransactionAmt'].astype(int)) * 1000).astype(int)
 
+        with timer("agg V features"):
+            # V1 ~ V11
+            vcol_names = [f'V{i}' for i in range(1, 12)]
+            self.train_feature['sum_V1_V11'] = train[vcol_names].sum(axis=1)
+            self.test_feature['sum_V1_V11'] = test[vcol_names].sum(axis=1)
+            self.train_feature['null_sum_V1_V11'] = train[vcol_names].isnull().sum(axis=1)
+            self.test_feature['null_sum_V1_V11'] = test[vcol_names].isnull().sum(axis=1)
+
+            # V12 ~ V34
+            vcol_names = [f'V{i}' for i in range(12, 35)]
+            self.train_feature['sum_V12_V34'] = train[vcol_names].sum(axis=1)
+            self.test_feature['sum_V12_V34'] = test[vcol_names].sum(axis=1)
+            self.train_feature['null_sum_V12_V34'] = train[vcol_names].isnull().sum(axis=1)
+            self.test_feature['null_sum_V12_V34'] = test[vcol_names].isnull().sum(axis=1)
+
+            # V35 ~ V52
+            vcol_names = [f'V{i}' for i in range(35, 53)]
+            self.train_feature['sum_V35_V52'] = train[vcol_names].sum(axis=1)
+            self.test_feature['sum_V35_V52'] = test[vcol_names].sum(axis=1)
+            self.train_feature['null_sum_V35_V52'] = train[vcol_names].isnull().sum(axis=1)
+            self.test_feature['null_sum_V35_V52'] = test[vcol_names].isnull().sum(axis=1)
+
+            # V53 ~ V74
+            vcol_names = [f'V{i}' for i in range(53, 75)]
+            self.train_feature['sum_V53_V74'] = train[vcol_names].sum(axis=1)
+            self.test_feature['sum_V53_V74'] = test[vcol_names].sum(axis=1)
+            self.train_feature['null_sum_V53_V74'] = train[vcol_names].isnull().sum(axis=1)
+            self.test_feature['null_sum_V53_V74'] = test[vcol_names].isnull().sum(axis=1)
+
+            # V75 ~ V94
+            vcol_names = [f'V{i}' for i in range(75, 95)]
+            self.train_feature['sum_V75_V94'] = train[vcol_names].sum(axis=1)
+            self.test_feature['sum_V75_V94'] = test[vcol_names].sum(axis=1)
+            self.train_feature['null_sum_V75_V94'] = train[vcol_names].isnull().sum(axis=1)
+            self.test_feature['null_sum_V75_V94'] = test[vcol_names].isnull().sum(axis=1)
+
+            # V95 ~ V125
+            vcol_names = [f'V{i}' for i in range(95, 126)]
+            self.train_feature['sum_V95_V125'] = train[vcol_names].sum(axis=1)
+            self.test_feature['sum_V95_V125'] = test[vcol_names].sum(axis=1)
+            self.train_feature['null_sum_V95_V125'] = train[vcol_names].isnull().sum(axis=1)
+            self.test_feature['null_sum_V95_V125'] = test[vcol_names].isnull().sum(axis=1)
+
+            # V138 ~ V166
+            vcol_names = [f'V{i}' for i in range(138, 167)]
+            self.train_feature['null_sum_V138_V166'] = train[vcol_names].isnull().sum(axis=1)
+            self.test_feature['null_sum_V138_V166'] = test[vcol_names].isnull().sum(axis=1)
+
+            # V167 ~ V216
+            vcol_names = [f'V{i}' for i in range(167, 217)]
+            self.train_feature['null_sum_V167_V216'] = train[vcol_names].isnull().sum(axis=1)
+            self.test_feature['null_sum_V167_V216'] = test[vcol_names].isnull().sum(axis=1)
+
+            # V217 ~ V278
+            vcol_names = [f'V{i}' for i in range(217, 279)]
+            self.train_feature['null_sum_V217_V278'] = train[vcol_names].isnull().sum(axis=1)
+            self.test_feature['null_sum_V217_V278'] = test[vcol_names].isnull().sum(axis=1)
+
+            # V279 ~ V321
+            vcol_names = [f'V{i}' for i in range(279, 322)]
+            self.train_feature['null_sum_V279_V321'] = train[vcol_names].isnull().sum(axis=1)
+            self.test_feature['null_sum_V279_V321'] = test[vcol_names].isnull().sum(axis=1)
+
+            # V322 ~ V339
+            vcol_names = [f'V{i}' for i in range(322, 340)]
+            self.train_feature['null_sum_V322_V339'] = train[vcol_names].isnull().sum(axis=1)
+            self.test_feature['null_sum_V322_V339'] = test[vcol_names].isnull().sum(axis=1)
+
         with timer("end"):
             self.train_feature.reset_index(drop=True, inplace=True)
             self.test_feature.reset_index(drop=True, inplace=True)
