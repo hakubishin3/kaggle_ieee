@@ -14,13 +14,15 @@ import seaborn as sns
 
 from src.features.base import load_features
 from src.models.lightgbm import LightGBM
+from src.models.catboost import Catboost
 from src.folds.get_folds import get_folds_per_user, get_folds_per_DTM
 from src.utils.logger import get_logger
 from src.utils.json_func import save_json
 
 
 model_map = {
-    'lightgbm': LightGBM
+    'lightgbm': LightGBM,
+    'catboost': Catboost
 }
 
 
@@ -133,8 +135,6 @@ def main():
     folds_ids = get_folds_per_DTM(train)
 
     x_train, x_test = load_features(config, args.debug)
-    # good_features = list(json.load(open("./data/output/model_17/output.json", "r"))["evals_result"]["feature_importance"].keys())[:500]
-    # x_train, x_test = x_train[good_features], x_test[good_features]
     feature_name = x_test.columns
     model_name = config['model']['name']
     model = model_map[model_name]()

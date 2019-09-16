@@ -38,6 +38,13 @@ def change_TransactionDT(df):
     return df
 
 
+def add_TransactionDT_LocalTime(df):
+    df["TransactionDT_LocalTime"] = df.apply(
+        lambda x: x["TransactionDT"] + datetime.timedelta(seconds=x["id_14"]*60)\
+        if x["id_14"] == x["id_14"] else np.nan, axis=1
+    )
+    return df
+
 def get_Registered_at(df):
     """
     add columns
@@ -52,6 +59,11 @@ def get_Registered_at(df):
 
 def get_D9(df):
     df["D9"] = df["TransactionDT"].apply(lambda x: x.hour)
+    return df
+
+
+def get_D9_LocalTime(df):
+    df["D9_LocalTime"] = df["TransactionDT_LocalTime"].apply(lambda x: x.hour)
     return df
 
 
@@ -100,8 +112,10 @@ def read_preprocessing_data(data_dir, data_type="train", write_mode=False):
     if write_mode is True:
         data = read_data(data_dir, data_type)
         data = change_TransactionDT(data)
+        data = add_TransactionDT_LocalTime(data)
         data = get_Registered_at(data)
         data = get_D9(data)
+        data = get_D9_LocalTime(data)
         data = get_emaildomain_v2(data)
         data.to_csv(data_dir + f"{data_type}.csv", header=True, index=False)
     else:

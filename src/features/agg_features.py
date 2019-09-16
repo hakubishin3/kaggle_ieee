@@ -2,6 +2,7 @@ import sys
 import time
 import datetime
 import itertools
+import numpy as np
 import pandas as pd
 from contextlib import contextmanager
 from base import Feature
@@ -56,6 +57,11 @@ groupby_dict = [
         'key': ['card1', 'card2', 'card3', 'card4', 'card5', 'card6', 'addr1', 'addr2', 'ProductCD'],
         'var': var_list,
         'agg': stats_list
+    },
+    {
+        'key': ['predicted_user_id'],
+        'var': ['D9', 'D9_sin', 'D9_cos', 'D9_LocalTime', 'D9_LocalTime_sin', 'D9_LocalTime_cos'],
+        'agg': stats_list
     }
 ]
 diff_dict = [
@@ -87,6 +93,11 @@ diff_dict = [
     {
         'key': ['card1', 'card2', 'card3', 'card4', 'card5', 'card6', 'addr1', 'addr2', 'ProductCD'],
         'var': var_list,
+        'agg': stats_diff_list
+    },
+    {
+        'key': ['predicted_user_id'],
+        'var': ['D9', 'D9_sin', 'D9_cos', 'D9_LocalTime', 'D9_LocalTime_sin', 'D9_LocalTime_cos'],
         'agg': stats_diff_list
     }
 ]
@@ -121,6 +132,12 @@ class Agg(Feature):
 
             total['TransactionAmt_decimal'] = ((total['TransactionAmt'] - total['TransactionAmt'].astype(int)) * 1000).astype(int)
             org_cols = total.columns
+
+        with timer("sin/cos transformation"):
+            total["D9_sin"] = np.sin(2 * np.pi * total["D9"] / 24).round(4)
+            total["D9_cos"] = np.cos(2 * np.pi * total["D9"] / 24).round(4)
+            total["D9_LocalTime_sin"] = np.sin(2 * np.pi * total["D9_LocalTime"] / 24).round(4)
+            total["D9_LocalTime_cos"] = np.cos(2 * np.pi * total["D9_LocalTime"] / 24).round(4)
 
         with timer("group by features"):
             groupby = GroupbyTransformer(param_dict=groupby_dict)
