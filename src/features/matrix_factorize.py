@@ -13,7 +13,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 sys.path.append("../")
 from utils.logger import get_logger
 from utils.read_data import read_preprocessing_data
-from utils.tools import CategoryVectorizer
+from utils.feature_module import CategoryVectorizer
 
 # ===============
 # Constants
