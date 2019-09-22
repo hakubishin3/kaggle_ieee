@@ -12,8 +12,8 @@ class LightGBM(Base_Model):
         model = lgb.train(
             params=lgb_model_params,
             train_set=d_train,
-            valid_sets=[d_train, d_valid],
-            valid_names=['train', 'valid'],
+            valid_sets=[d_valid],
+            valid_names=['valid'],
             # categorical_feature = [col for col in x_train.columns if col.find("Label_En") != -1],
             **lgb_train_params
         )

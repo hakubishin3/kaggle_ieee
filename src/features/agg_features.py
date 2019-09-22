@@ -24,7 +24,7 @@ FE_DIR = "../../data/features/"
 # Settings
 # ===============
 logger = get_logger()
-var_list = ["TransactionAmt", "V258", "V257", "V201", "TransactionAmt_decimal"]
+var_list = ["TransactionAmt", "V258", "V257", "V201", "TransactionAmt_decimal", "D11", "V75_94_mean", "V95_137_mean", "V167_216_mean", "V242_263_mean"]
 stats_list = ['mean', 'std', 'min', 'max']
 stats_diff_list = ['mean', 'min', 'max']
 groupby_dict = [
@@ -54,7 +54,7 @@ groupby_dict = [
         'agg': stats_list
     },
     {
-        'key': ['card1', 'card2', 'card3', 'card4', 'card5', 'card6', 'addr1', 'addr2', 'ProductCD'],
+        'key': ['card1', 'card2', 'card3', 'card4', 'card5', 'card6', 'addr1', 'addr2', 'ProductCD', 'Registered_at'],
         'var': var_list,
         'agg': stats_list
     },
@@ -91,7 +91,7 @@ diff_dict = [
         'agg': stats_diff_list
     },
     {
-        'key': ['card1', 'card2', 'card3', 'card4', 'card5', 'card6', 'addr1', 'addr2', 'ProductCD'],
+        'key': ['card1', 'card2', 'card3', 'card4', 'card5', 'card6', 'addr1', 'addr2', 'ProductCD', 'Registered_at'],
         'var': var_list,
         'agg': stats_diff_list
     },
@@ -131,6 +131,33 @@ class Agg(Feature):
             total = train.append(test).reset_index(drop=True)
 
             total['TransactionAmt_decimal'] = ((total['TransactionAmt'] - total['TransactionAmt'].astype(int)) * 1000).astype(int)
+
+        with timer("make V features"):
+            ### V75 ~~~ 94
+            cols_V75_94 = [f'V{no}' for no in range(75, 95, 1)]
+            cols_other = [f'V{no}' for no in [75, 88, 89, 90, 91, 94, 100, 104, 105, 106]]
+            cols_V75_94 = list(set(cols_V75_94) - set(cols_other))
+            total['V75_94_mean'] = total[cols_V75_94].mean(axis=1)
+
+            ### V95 ~~~ 137
+            cols_V95_137 = [f'V{no}' for no in range(95, 138, 1)]
+            cols_V95_137 = list(set(cols_V95_137) - set([f'V{no}' for no in range(130, 138, 1)]))
+            cols_other = [f'V{no}' for no in [96, 98, 99, 100, 104, 105, 106 , 120, 121, 122, 126, 127, 128]]
+            cols_other_2 = [f'V{no}' for no in [117, 118, 119]]
+            cols_V95_137 = sorted(list(set(cols_V95_137) - set(cols_other) -set(cols_other_2)))
+            total['V95_137_mean'] = total[cols_V95_137].mean(axis=1)
+
+            ### V167 ~~~ 216
+            cols_V167_216 = [f'V{no}' for no in range(167, 217, 1)]
+            cols_other = [f'V{no}' for no in range(186, 202, 1)]
+            no_use_cols = [f'V{no}' for no in [169, 172, 173, 174, 175] + list(range(202, 217, 1))]
+            cols_V167_216 = sorted(list(set(cols_V167_216) - set(cols_other) -set(no_use_cols)))
+            total['V167_216_mean'] = total[cols_V167_216].mean(axis=1)
+
+            ### V242 ~~~ 263
+            cols_V242_263 = [f'V{no}' for no in list(range(242, 250, 1)) + list(range(252, 255, 1)) + list(range(257, 263, 1))]
+            total['V242_263_mean'] = total[cols_V242_263].mean(axis=1)
+
             org_cols = total.columns
 
         with timer("sin/cos transformation"):
