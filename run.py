@@ -187,6 +187,7 @@ def main():
     # ============================================
     save_path = model_output_dir / 'output.json'
     save_json(config, save_path)
+    np.save(model_output_dir/ "oof_preds.csv", oof_preds)
 
 
 if __name__ == '__main__':
