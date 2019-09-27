@@ -135,7 +135,16 @@ def main():
     folds_ids = get_folds_per_DTM(train)
 
     x_train, x_test = load_features(config, args.debug)
+
+    # remove features
+    remove_features = [c for c in x_test.columns if c.find("_D3_") != -1]
+    logger.info(f"remove features: {remove_features}")
+    remain = [c for c in x_test.columns if c not in remove_features]
+    x_train, x_test = x_train[remain], x_test[remain]
+
     feature_name = x_test.columns
+    logger.debug(f'number of features: {len(feature_name)}')
+
     model_name = config['model']['name']
     model = model_map[model_name]()
     models, oof_preds, test_preds, feature_importance, evals_results = model.cv(
@@ -181,13 +190,15 @@ def main():
             'private_score': private_score,
         }
     })
+    logger.info(f"bear's public score: {public_score}")
+    logger.info(f"bear's private score: {private_score}")
 
     # ============================================
     # === Save
     # ============================================
     save_path = model_output_dir / 'output.json'
     save_json(config, save_path)
-    np.save(model_output_dir/ "oof_preds.csv", oof_preds)
+    np.save(model_output_dir/ "oof_preds.npy", oof_preds)
 
 
 if __name__ == '__main__':

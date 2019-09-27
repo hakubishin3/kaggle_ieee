@@ -56,6 +56,12 @@ def get_Registered_at(df):
     )
     return df
 
+def get_FirstTransaction_at(df):
+    df["FirstTransaction_at"] = df.apply(
+        lambda x: (x["TransactionDT"] - datetime.timedelta(days=x["D2"])).strftime("%Y-%m-%d")\
+        if x["D2"] == x["D2"] else np.nan, axis=1
+    )
+    return df
 
 def get_D9(df):
     df["D9"] = df["TransactionDT"].apply(lambda x: x.hour)
@@ -114,6 +120,7 @@ def read_preprocessing_data(data_dir, data_type="train", write_mode=False):
         data = change_TransactionDT(data)
         data = add_TransactionDT_LocalTime(data)
         data = get_Registered_at(data)
+        data = get_FirstTransaction_at(data)
         data = get_D9(data)
         data = get_D9_LocalTime(data)
         data = get_emaildomain_v2(data)
