@@ -37,7 +37,7 @@ def get_folds_per_DTM(train):
     train = get_DTM(train)
 
     # create folds
-    kf = GroupKFold(n_splits=5)
+    kf = GroupKFold(n_splits=6)
     folds_ids = []
     for train_index, valid_index in kf.split(train, train, train["DT_M"]):
         folds_ids.append((train_index, valid_index))

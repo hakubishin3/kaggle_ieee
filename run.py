@@ -169,7 +169,7 @@ def main():
     # ============================================
     # === Check test score
     # ============================================
-    df_probing = pd.read_csv('data/interim/probing_toolbox/probing.csv').loc[:, ['TransactionID', 'data_type', 'Probing_isFraud']]
+    df_probing = pd.read_csv('data/interim/probing_toolbox/20190929_probing.csv').loc[:, ['TransactionID', 'data_type', 'Probing_isFraud']]
     df = pd.merge(df_probing, sub, on='TransactionID', how='left')
 
     # test public score
