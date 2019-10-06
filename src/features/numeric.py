@@ -22,7 +22,6 @@ FE_DIR = "../../data/features/"
 # Settings
 # ===============
 logger = get_logger()
-# logger = get_logger(out_file="label_encoding.log")
 
 
 # ===============
