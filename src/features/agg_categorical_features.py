@@ -24,7 +24,6 @@ FE_DIR = "../../data/features/"
 # Settings
 # ===============
 logger = get_logger()
-# logger = get_logger(out_file="label_encoding.log")
 
 var_list = [
     'DeviceType',
@@ -79,7 +78,6 @@ def _calc_agg_category_func(df, key, value):
     # concat
     df = pd.merge(df, result, on=key+[value], how="left")
 
-    # return df[[new_fe_name_sample, new_fe_name_ratio]]
     return df[new_fe_name_ratio]
 
 
@@ -89,7 +87,6 @@ def calc_agg_category_func(df, groupby_dict):
         key, value_list = grp['key'], grp['var']
         for value in value_list:
             arg_list.append([key, value])
-            # _calc_rolling_func(df, key, value)
 
     result_list = Parallel(n_jobs=-1)([delayed(_calc_agg_category_func)(df[arg[0] + [arg[1]]], arg[0], arg[1]) for arg in arg_list])
     result = pd.concat(result_list, axis=1)

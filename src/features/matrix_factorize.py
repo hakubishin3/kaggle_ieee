@@ -80,13 +80,6 @@ class Matrix_Factorize(Feature):
             train = read_preprocessing_data(DATA_DIR, "train", write_mode=False)
             test = read_preprocessing_data(DATA_DIR, "test", write_mode=False)
 
-        """
-        with timer("get predicted user id"):
-            predicted_user = pd.read_csv('../../data/interim/20190901_user_ids_share.csv')
-            train = pd.merge(train, predicted_user[['TransactionID', 'predicted_user_id']], how='left', on='TransactionID')
-            test = pd.merge(test, predicted_user[['TransactionID', 'predicted_user_id']], how='left', on='TransactionID')
-        """
-
         with timer("create features"):
             train_result, test_result = matrix_factorize(categorical_cols, train, test)
             self.train_feature = train_result

@@ -8,7 +8,9 @@
         "OS_and_Browser",
         "Agg",
         "Matrix_Factorize",
-        "Agg_Future"
+        "Agg_Future",
+        "Holygo_528features",
+        "Agg_Category"
     ],
     "cv": {
         "method": "GroupKFold",
@@ -38,15 +40,29 @@
         }
     },
     "model": {
-        "name": "catboost",
+        "name": "lightgbm",
         "model_params": {
-            "loss_function": "Logloss",
-            "eval_metric": "AUC",
-            "learning_rate": 0.07,
-            "n_estimators": 10000,
-            "metric_period": 200,
-            "od_wait": 500,
-            "depth": 8
+            "boosting_type": "gbdt",
+            "objective": "binary",
+            "metric": "AUC",
+            "tree_learner": "serial",
+            "learning_rate": 0.01,
+            "max_depth": -1,
+            "num_leaves": 256,
+            "subsample": 0.7,
+            "subsample_freq": 1,
+            "colsample_bytree": 0.5,
+            "max_bin": 255,
+            "seed": 71,
+            "bagging_seed": 71,
+            "feature_fraction_seed": 71,
+            "drop_seed": 71,
+            "verbose": -1
+        },
+        "train_params": {
+            "num_boost_round": 5000,
+            "early_stopping_rounds": 200,
+            "verbose_eval": 200
         }
     },
     "dataset": {

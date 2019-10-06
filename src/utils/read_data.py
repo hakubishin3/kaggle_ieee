@@ -131,14 +131,6 @@ def read_preprocessing_data(data_dir, data_type="train", write_mode=False):
     return data
 
 
-def get_user_id(df):
-    key_list = ['card1', 'card2', 'card3', 'card4', 'card5', 'card6', 'addr1', 'addr2', 'Registered_at', 'ProductCD']
-    df["predicted_user_id"] = ""
-    for col in key_list:
-        df["predicted_user_id"] += df[col].astype(str) + "_"
-    return df
-
-
 if __name__ == "__main__":
     data_dir = "../../data/input/"
     train = read_preprocessing_data(data_dir, "train", write_mode=True)

@@ -77,7 +77,6 @@ def main():
     feature_name = x_test.columns
     logger.debug(f'number of features: {len(feature_name)}')
 
-    """
     # =========================================
     # === Adversarial Validation
     # =========================================
@@ -124,7 +123,6 @@ def main():
             'feature_importances': feature_imp.set_index("feature").sort_values(by="value", ascending=False).head(20).to_dict()["value"]
         }
     })
-    """
 
     # =========================================
     # === train model
@@ -138,6 +136,13 @@ def main():
 
     # remove features
     remove_features = [c for c in x_test.columns if c.find("_D3_") != -1]
+    remove_features_2 = [c for c in x_test.columns if c.find("_D1_") != -1 or c.find("_D2_") != -1 or c.find("_D4_") != -1 or c.find("_D6_") != -1 or c.find("_D8_") != -1 or c.find("_D10_") != -1 or c.find("_D15_") != -1]
+    remove_features_3 = [
+        "Label_Encoding_id_22", "Label_Encoding_id_23", "Label_Encoding_id_24",
+        "Label_Encoding_id_25", "Label_Encoding_id_26", "Label_Encoding_id_27",
+        "Label_Encoding_DeviceInfo"
+    ]
+    remove_features = remove_features + remove_features_2 + remove_features_3
     logger.info(f"remove features: {remove_features}")
     remain = [c for c in x_test.columns if c not in remove_features]
     x_train, x_test = x_train[remain], x_test[remain]

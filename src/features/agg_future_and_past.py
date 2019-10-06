@@ -152,16 +152,6 @@ class Agg_Future(Feature):
                 "diff_grp_TransactionAmt_lag1_future", "diff_grp_TransactionAmt_lag1_past",
             ])
 
-            # アイデア
-            """
-            ・過去からの累積値
-            ・未来からの累積値
-            ・1個前と値が同じか否か
-            ・1個後と値が同じか否か
-            ・過去にない値が出現したかどうか
-            ・過去からのdistinctの累積値
-            """
-
         with timer("end"):
             train_result = total.iloc[:len(train)].reset_index(drop=True)
             test_result = total.iloc[len(train):].reset_index(drop=True)

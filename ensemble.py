@@ -29,23 +29,23 @@ def main():
 
     logger.info("=== file path ===")
     # set model
-    oof_1_path = "./data/output/20190929_hmdhmd/20190929_hmdhmd_oof.csv"
-    pred_1_path = "./data/output/20190929_hmdhmd/20190929_hmdhmd_pred.csv"
+    oof_1_path = "./data/output/20190930_hmdhmd/20190930_hmdhmd_oof.csv"
+    pred_1_path = "./data/output/20190930_hmdhmd/20190930_hmdhmd_pred.csv"
     logger.info(f"hmd model - oof: {oof_1_path}")
     logger.info(f"hmd model - pred: {pred_1_path}")
 
-    oof_2_path = "./data/output/20190929_ML_bear/20190928_all_uid_aggs_New_single_user_id_preds_oof_features1354_oof0.954_pub0.984_pri0.983.csv"
-    pred_2_path = "./data/output/20190929_ML_bear/20190928_all_uid_aggs_New_single_user_id_preds_pred_features1354_oof0.954_pub0.984_pri0.983.csv"
+    oof_2_path = "./data/output/20191001_ML_Bear/OOF_20190930_ModelAvg_based_on_LB09578_20190930_03_full_model_01_oof09565_pub09886_pri09882.csv"
+    pred_2_path = "./data/output/20191001_ML_Bear/PRED_20190930_ModelAvg_based_on_LB09578_20190930_03_full_model_01_oof09565_pub09886_pri09882.csv"
     logger.info(f"bear model - oof: {oof_2_path}")
     logger.info(f"bear model - pred: {pred_2_path}")
 
-    oof_3_path = "./data/output/model_23/oof_preds.npy"
-    pred_3_path = "./data/output/model_23/submission.csv"
+    oof_3_path = "./data/output/model_25/oof_preds.npy"
+    pred_3_path = "./data/output/model_25/submission.csv"
     logger.info(f"hakubishin model - oof: {oof_3_path}")
     logger.info(f"hakubishin model - pred: {pred_3_path}")
 
-    oof_4_path = "./data/output/20190927_holygo/0927_0221__holygo_oof__CV0.959479__LB0.9596.csv"
-    pred_4_path = "./data/output/20190927_holygo/20190927_0221__CV0-959479__lr0-01.csv"
+    oof_4_path = "./data/output/20190930_holygo/20190930_2032__train_oof_holygo_CV0-9592479__LB0.9594.csv"
+    pred_4_path = "./data/output/20190930_holygo/20190930_2032__test_pred_holygo_CV0-9592479__LB0.9594.csv"
     logger.info(f"holygo model - oof: {oof_4_path}")
     logger.info(f"holygo model - pred: {pred_4_path}")
 
@@ -72,7 +72,7 @@ def main():
     # =========================================
     logger.info("=== check score ===")
     def calc_bear_score(df):
-        df_probing = pd.read_csv('data/interim/probing_toolbox/20190929_probing.csv').loc[:, ['TransactionID', 'data_type', 'Probing_isFraud']]
+        df_probing = pd.read_csv('data/interim/probing_toolbox/old/probing.csv').loc[:, ['TransactionID', 'data_type', 'Probing_isFraud']]
         df = pd.merge(df_probing, df, on='TransactionID', how='left')
         # test public score
         public_score = roc_auc_score(
@@ -128,10 +128,10 @@ def main():
     # === hand made
     # =========================================
     logger.info("=== hand made ===")
-    
+
     sub = pred_3.copy()
-    # x_opt = [0.1, 0.2, 0.65, 0.05]
-    x_opt = [0.10, 0.25, 0.55, 0.10]
+    #x_opt = [0.10, 0.25, 0.55, 0.10]
+    x_opt = [0.050, 0.226, 0.6725, 0.0515]
     logger.info(f"rate: {x_opt}") 
     oof = oof_1 * x_opt[0] + oof_2 * x_opt[1] + oof_3 * x_opt[2] + oof_4 * x_opt[3]
     cv = roc_auc_score(y_train[train_target_index], oof[train_target_index])
@@ -177,10 +177,10 @@ def main():
         return opt_value
 
     bounds = [
-        {'name': 'x0', 'type': 'continuous', 'domain': (0.1, 1)},
-        {'name': 'x1', 'type': 'continuous', 'domain': (0.1, 1)},
-        {'name': 'x2', 'type': 'continuous', 'domain': (0.1, 1)},
-        {'name': 'x3', 'type': 'continuous', 'domain': (0.1, 1)},
+        {'name': 'x0', 'type': 'continuous', 'domain': (0.05, 1)},
+        {'name': 'x1', 'type': 'continuous', 'domain': (0.05, 1)},
+        {'name': 'x2', 'type': 'continuous', 'domain': (0.05, 1)},
+        {'name': 'x3', 'type': 'continuous', 'domain': (0.05, 1)},
     ]
 
     constraints = [
@@ -195,7 +195,7 @@ def main():
     ]
 
     myBopt = GPyOpt.methods.BayesianOptimization(f=f, domain=bounds, constraints=constraints)
-    myBopt.run_optimization(max_iter=10)
+    myBopt.run_optimization(max_iter=30)
     logger.info(f"rate: {myBopt.x_opt}") 
     logger.info(f"value: {myBopt.fx_opt}")
 
@@ -209,11 +209,13 @@ def main():
     sub["isFraud"] = pred_1["isFraud"] * myBopt.x_opt[0] + pred_2["isFraud"] * myBopt.x_opt[1] + pred_3["isFraud"] * myBopt.x_opt[2] + pred_4["isFraud"] * myBopt.x_opt[3]
     pub, prv = calc_bear_score(sub)
     logger.info(f"ensemble model: pub{pub}, prv{prv}")
+    import pdb; pdb.set_trace()
 
     # override probing value and save
     df_probing = pd.read_csv('data/interim/probing_toolbox/20190929_probing.csv').loc[:, ['TransactionID', 'data_type', 'Probing_isFraud']]
     sub = pd.merge(sub, df_probing, on="TransactionID", how="left")
-    sub.loc[sub.Probing_isFraud.notnull(), "isFraud"] = sub.loc[sub.Probing_isFraud.notnull(), "Probing_isFraud"].values
+    # override only probing_isfraud = 1
+    sub.loc[sub.Probing_isFraud == 1, "isFraud"] = 1
     sub = sub[["TransactionID", "isFraud"]]
     pub, prv = calc_bear_score(sub)
     logger.info(f"ensemble model after override proving value: pub{pub}, prv{prv}")
