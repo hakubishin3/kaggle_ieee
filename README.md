@@ -7,7 +7,8 @@ https://www.kaggle.com/c/ieee-fraud-detection/leaderboard
 Discussion: https://www.kaggle.com/c/ieee-fraud-detection/discussion/111735
 
 ## Other teams solution
-summary(japanese)
+
+[summary(japanese)](https://github.com/hakubishin3/kaggle_ieee/blob/master/ieee_summary.md)
 
 ## Summary written by other participants
 - http://kurupical.hatenablog.com/entry/2019/10/05/172615
