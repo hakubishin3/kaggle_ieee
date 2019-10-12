@@ -11,6 +11,7 @@ Discussion: https://www.kaggle.com/c/ieee-fraud-detection/discussion/111735
 [summary(japanese)](https://github.com/hakubishin3/kaggle_ieee/blob/master/ieee_summary.md)
 
 ## Summary written by other participants
+- https://takaishikawa42.hatenablog.com/entry/2019/10/07/065007
 - http://kurupical.hatenablog.com/entry/2019/10/05/172615
 - https://mhiro216.hatenablog.com/entry/2019/10/07/085345
 - https://qiita.com/resistance0108/items/273f6e9b7860f8053619
