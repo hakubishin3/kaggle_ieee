@@ -6,10 +6,6 @@ https://www.kaggle.com/c/ieee-fraud-detection/leaderboard
 ## Our team's approach
 Discussion: https://www.kaggle.com/c/ieee-fraud-detection/discussion/111735
 
-## Other teams solution
-
-[summary(japanese)](https://github.com/hakubishin3/kaggle_ieee/blob/master/ieee_summary.md)
-
 ## Summary written by other participants
 - https://takaishikawa42.hatenablog.com/entry/2019/10/07/065007
 - http://kurupical.hatenablog.com/entry/2019/10/05/172615
